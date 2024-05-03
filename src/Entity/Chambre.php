@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ChambreRepository;
 use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: ChambreRepository::class)]
@@ -49,7 +50,7 @@ class Chambre
 
     #[ORM\Column]
     #[Groups(['Chambre:item:get'])]
-    private ?bool $isValidate = null;
+    private ?bool $validate = false;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['Chambre:item:get'])]
@@ -134,12 +135,12 @@ class Chambre
 
     public function isValidate(): ?bool
     {
-        return $this->isValidate;
+        return $this->validate;
     }
 
-    public function setValidate(bool $isValidate): static
+    public function setValidate(bool $validate): static
     {
-        $this->isValidate = $isValidate;
+        $this->validate = $validate;
 
         return $this;
     }
