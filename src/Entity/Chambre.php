@@ -3,12 +3,27 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ChambreRepository;
+use ApiPlatform\Metadata\GetCollection;
 
 
 #[ORM\Entity(repositoryClass: ChambreRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => 'Chambre:item:get'],),
+        new GetCollection(),
+        new Post(),
+        new Delete(),
+        new Patch()
+    ]
+)]
 class Chambre
 {  
     #[ORM\Id]
@@ -17,30 +32,39 @@ class Chambre
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['Chambre:item:get'])]
     private ?int $numero = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['Chambre:item:get'])]
     private ?string $nom = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['Chambre:item:get'])]
     private ?int $nbPersonne = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['Chambre:item:get'])]
     private ?string $suiviMenage = null;
 
     #[ORM\Column]
+    #[Groups(['Chambre:item:get'])]
     private ?bool $isValidate = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['Chambre:item:get'])]
     private ?string $commentaire = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['Chambre:item:get'])]
     private ?string $statut = null;
 
     #[ORM\Column]
+    #[Groups(['Chambre:item:get'])]
     private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
+    #[Groups(['Chambre:item:get'])]
     private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'chambres')]
